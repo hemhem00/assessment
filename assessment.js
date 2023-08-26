@@ -1,8 +1,8 @@
 'user strict';
 const userNameInput    = document.getElementById('user-name');
 const assessmentButton = document.getElementById('assessment');
-const resultDivision   = document.getElementById('result-area');
-const tweetDivision    = document.getElementById('tweet-area');
+const resultDivided   = document.getElementById('result-area');
+const tweetDivided    = document.getElementById('tweet-area');
 
 assessmentButton.onclick = function(){
   const userName = userNameInput.value;
@@ -14,20 +14,34 @@ assessmentButton.onclick = function(){
 
 //診断結果表示エリアの作成
 //作成の前にタグを空にする
-resultDivision.innerText = ' ';
+resultDivided.innerText = ' ';
 //結果を追加
-const header = document.createElement('h3'); //h3タグをつくる
-header.innerText = '診断結果';
-resultDivision.appendChild(header);//divの子要素として追加
+//headerDividedの作成
+const headerDivided = document.createElement('div'); //h3タグをつくる
+headerDivided.setAttribute('class','card-header');
+headerDivided.innerText = '診断結果';//中身の文章を設定
+
+//bodyDividedの作成
+const bodyDivided = document.createElement('div');
+bodyDivided.setAttribute('class','card-body');
 
 const paragraph = document.createElement('p');
+paragraph.setAttribute('class','card-text');
+
 const result = assessment(userName);
 paragraph.innerText = result;
-resultDivision.appendChild(paragraph);
+bodyDivided.appendChild(paragraph);
 
+//resultDividedにcardスタイルを追加
+resultDivided.setAttribute('class','card');
+resultDivided.setAttribute('style','max-width:700px');
+
+//headerDividedとbodyDividedをresultDividedに差し込む
+resultDivided.appendChild(headerDivided);
+resultDivided.appendChild(bodyDivided);
 
 //TODOツイートエリアの作成
-tweetDivision.innerText = ' ';
+tweetDivided.innerText = ' ';
 const anchor = document.createElement('a');
 const hrefValue = 'https://twitter.com/intent/tweet?button_hashtag=あなたのいいところ&ref_src=twsrc%5Etfw';
 anchor.setAttribute('href',hrefValue);
@@ -35,11 +49,11 @@ anchor.setAttribute('class','twitter-hashtag-button');
 anchor.setAttribute('data-text',result);
 anchor.innerText = 'Tweet #あなたのいいところ';
 
-tweetDivision.appendChild(anchor);
+tweetDivided.appendChild(anchor);
 
 const script = document.createElement('script');
 script.setAttribute('src','https://platform.twitter.com/widgets.js');
-tweetDivision.appendChild(script);
+tweetDivided.appendChild(script);
 };
 
 const answers =[
